@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="job_title")
+@Table(name="job_titles")
 public class JobTitle {
 
 	@Id
