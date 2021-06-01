@@ -5,14 +5,14 @@ import java.util.List;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.EmailVerification;
-
+import kodlamaio.hrms.entities.concretes.Employer;
 import kodlamaio.hrms.entities.concretes.HrmsVerification;
-import kodlamaio.hrms.entities.concretes.User;
 
-public interface UserService {
+public interface EmployerService {
 
-    DataResult<List<User>>getAll();
-	Result add(User user);
+	Result delete(int id);
 	
-	public Result register(User user, HrmsVerification hrmsVerification, EmailVerification emailVerification);
+	DataResult<List<Employer>>getAll();
+	
+	public Result register(Employer employer, HrmsVerification hrmsVerification, EmailVerification emailVerification);
 }

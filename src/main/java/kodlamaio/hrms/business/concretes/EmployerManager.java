@@ -5,56 +5,50 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kodlamaio.hrms.business.abstracts.UserService;
+import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.core.utilities.abstracts.EmailCheckService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.dataAccess.abstracts.UserDao;
+import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.EmailVerification;
+import kodlamaio.hrms.entities.concretes.Employer;
 import kodlamaio.hrms.entities.concretes.HrmsVerification;
-import kodlamaio.hrms.entities.concretes.User;
 
 @Service
-public class UserManager implements UserService{
+public class EmployerManager implements EmployerService{
 
-	private UserDao userDao; 
+	private EmployerDao employerDao;
 	private EmailCheckService emailCheckService;
 	
 	@Autowired
-	public UserManager(UserDao userDao,EmailCheckService emailCheckService) {
+	public EmployerManager(EmployerDao employerDao, EmailCheckService emailCheckService) {
 		super();
-		this.userDao = userDao;
+		this.employerDao = employerDao;
 		this.emailCheckService = emailCheckService;
 	}
-
-	@Override
-	public DataResult<List<User>>  getAll() {
-		 
-		return new SuccessDataResult<List<User>>(this.userDao.findAll(),"Data listelendi");
-	}
-
-	@Override
-	public Result add(User user) {
 	
-		List<User> users=this.userDao.findAll();
-		for (User user2 : users) {
-			if (user2==user) {
-				return new ErrorResult("kullanıcı zaten mevcut başka bir kullanıcı giriniz");
-			} else {
-                     this.userDao.save(user);               
-			}
-		}
-		return new SuccessResult("Kullanıcı eklendi");
+
+
+	@Override
+	public Result delete(int id) {
+		this.employerDao.deleteById(id);
+	return new SuccessResult("employer silindi");	
 	}
 
 	@Override
-	public Result register(User user, HrmsVerification hrmsVerification, EmailVerification emailVerification) {
+	public DataResult<List<Employer>> getAll() {
+
+		return new SuccessDataResult<List<Employer>>(this.employerDao.findAll(), "Data getirildi.");
+	}
+
+	@Override
+	public Result register(Employer employer, HrmsVerification hrmsVerification, EmailVerification emailVerification) {
 		Result result = new SuccessResult("Kayit basarili.");
 
-		if (emailCheckService.emailIsItUsed(user.getEmail())) {
+		if (emailCheckService.emailIsItUsed(employer.getEmail())) {
 			result = new ErrorResult("Email sisteme kayitli.");
 			return result;
 		}if(emailVerification.isEmailBool() == false){
@@ -65,7 +59,7 @@ public class UserManager implements UserService{
 			result = new ErrorResult("Hrms onayi gerekiyor.");
 			return result;
 		}else {
-			this.userDao.save(user);
+			this.employerDao.save(employer);
 			
 		}
 		return result;

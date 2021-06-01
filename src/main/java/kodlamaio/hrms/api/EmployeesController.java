@@ -11,36 +11,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kodlamaio.hrms.business.abstracts.JobTitleService;
+import kodlamaio.hrms.business.abstracts.EmployeeService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.entities.concretes.Employee;
 
-import kodlamaio.hrms.entities.concretes.JobTitle;
 
 @RestController
-@RequestMapping("/api/jobtitles")
-public class JobTitlesController {
+@RequestMapping("/api/employees")
+public class EmployeesController {
 
-	private JobTitleService jobTitleService;
+	private EmployeeService employeeService;
 
 	@Autowired
-	public JobTitlesController(JobTitleService jobTitleService) {
+	public EmployeesController(EmployeeService employeeService) {
 		super();
-		this.jobTitleService = jobTitleService;
+		this.employeeService = employeeService;
 	}
-	
-	@GetMapping("/getall")
-	public DataResult<List<JobTitle>>  getAll(){
-		return this.jobTitleService.getAll();
-		}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody JobTitle jobTitle) {
-		return this.jobTitleService.add(jobTitle);
+	public Result add(@RequestBody Employee employee) {
+		return this.employeeService.add(employee);
 	}
-	
-	@DeleteMapping("delete")
-	public void delete(@PathVariable int id) {
-		this.jobTitleService.delete(id);
+	@DeleteMapping("/delete")
+	public Result delete(@PathVariable int id) {
+		return this.employeeService.delete(id);
 	}
+	@GetMapping("/getall")
+	public DataResult<List<Employee>> getAll(){
+		return this.employeeService.getAll();
+		}
 }
