@@ -1,5 +1,7 @@
 package kodlamaio.hrms.entities.concretes;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,55 +11,56 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name="job_advertisements")
 @Entity
-@Table(name = "job_advertisement")
-@EqualsAndHashCode(callSuper=false)
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","JobAdvertisement"})
 public class JobAdvertisement {
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private int id;
 	
-	@Column(name = "job_description")
-	private String jobDescription;
 	
-	@Column(name = "min_salary")
-	private int minSalary;
+	@Column(name="description")
+	private String description;
 	
-	@Column(name = "max_salary")
-	private int maxSalary;
+	@Column(name="quota")
+	private int quota;
 	
-	@Column(name = "number_of_open_positions")
-	private int numberOfOpenPosition;
+	@Column(name="appeal_expiration_date")
+	private LocalDateTime appealExpirationDate;
 	
-	@Column(name = "application_deadline")
-	private String applicationDeadline;
+	@Column(name="created_date")
+	private LocalDateTime createdDate;
 	
-	@Column(name = "is_active")
+	@Column(name="min_salary")
+	private Double minSalary;
+	
+	@Column(name="max_salary")
+	private Double maxSalary;
+	
+	@Column(name="is_active")
 	private boolean isActive;
 	
-	@Column(name = "release_date")
-	private String releaseDate;
+	 @ManyToOne
+	  @JoinColumn(name = "city_id")
+	   private City city;
+	 
+	 @ManyToOne
+	  @JoinColumn(name = "job_title_id")
+	   private JobTitle jobtitle;
+	 
+	 @ManyToOne
+	  @JoinColumn(name = "employer_id")
+	   private Employer employer;
 	
 	
-	
-	@ManyToOne
-	@JoinColumn(name = "employer_id")
-	private Employer employer;
-	
-	@ManyToOne
-	@JoinColumn(name = "city_id")
-	private City city;
-	
-	@ManyToOne
-	@JoinColumn(name = "job_title_id")
-	private JobTitle jobTitle;
 }

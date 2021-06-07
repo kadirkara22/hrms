@@ -9,9 +9,12 @@ import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 
 public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement, Integer> {
 
-	@Query("From JobAdvertisement where isActive = true")
-	List<JobAdvertisement> getByIsActive();
+List<JobAdvertisement> getByEmployerId(int employerId);
 	
-	@Query("From JobAdvertisement where employer.companyName=:companyName and isActive=true")
-	List<JobAdvertisement> getByEmployer_CompanyNameAndIsActive(String companyName);
+	List<JobAdvertisement> findAllByIsActive(boolean isActive);
+	
+	List<JobAdvertisement> findAllByIsActiveOrderByCreatedDateDesc(boolean isActive);
+	
+	@Query("From JobAdvertisement where isActive = true and employer_id =:id")
+	List<JobAdvertisement> getEmployersActiveJobAdvertisement(int id);
 }

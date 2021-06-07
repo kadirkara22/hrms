@@ -2,60 +2,60 @@ package kodlamaio.hrms.business.concretes;
 
 import java.util.List;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.JobTitleService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.ErrorResult;
+import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
-import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.JobTitleDao;
 import kodlamaio.hrms.entities.concretes.JobTitle;
 
 @Service
-public class JobTitleManager implements JobTitleService {
-
-	private JobTitleDao jobTitleDao;
+public class JobTitleManager implements JobTitleService{
 	
 	@Autowired
-	public JobTitleManager(JobTitleDao jobTitleDao) {
-		super();
-		this.jobTitleDao = jobTitleDao;
+	private JobTitleDao jobTitleDao;
+	
+	public JobTitleManager() {
+		
+	}
+	
+	@Override
+	public DataResult<List<JobTitle>> getAll() {
+		
+		return new SuccessDataResult<List<JobTitle>>(jobTitleDao.findAll(),"Başarıyla listelendi");
 	}
 
 	@Override
-	public DataResult<List<JobTitle>>  getAll() {
+	public DataResult<List<JobTitle>> findById(int id) {
 		
-		return new SuccessDataResult<List<JobTitle>>(this.jobTitleDao.findAll(),"job listelendi");
+		return new SuccessDataResult<List<JobTitle>>(this.jobTitleDao.findById(id),"Başarıyla listelendi");
 	}
-				
 
 	@Override
-	public Result add(JobTitle jobTitle) {
+    public DataResult<List<JobTitle>> findJobTitles(String title) {
+        return new SuccessDataResult<List<JobTitle>>(this.jobTitleDao.findJobTitles(title),"Başarıyla listelendi");
+    }
+
+	@Override
+	public DataResult<JobTitle> add(JobTitle title) {
 		
-		List<JobTitle> jobTitles=this.jobTitleDao.findAll();
-		
-		for (JobTitle jobTitle2 : jobTitles) {
-		if (jobTitle2==jobTitle) {
-			return new ErrorResult("Bu pozisyon zaten mevcut");
-			
-		} else {
-               this.jobTitleDao.save(jobTitle);
-              
-		}
+		if(jobTitleDao.findAllByTitle(title.getTitle()).stream().count() !=0 ) {
+			return new ErrorDataResult<JobTitle>(null,"Böyle bir iş pozisyonu zaten kayıtlı");
 			
 		}
-		 return new SuccessResult("Kullanıcı eklendi");
+		return new SuccessDataResult<JobTitle>(this.jobTitleDao.save(title),"Başarıyla listelendi");
 		
 	}
 
 	@Override
 	public Result delete(int id) {
-		this.jobTitleDao.deleteById(id);
-		return new SuccessResult("Kullanıcı silindi");
-		
+		// TODO Auto-generated method stub
+		return null;
 	}
-
 }

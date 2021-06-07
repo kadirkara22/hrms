@@ -12,11 +12,12 @@ public interface JobAdvertisementService {
 	
 	public DataResult<List<JobAdvertisement>> getAll();
 	
-	public DataResult<List<JobAdvertisement>> getByIsActive();
+
+	DataResult<List<JobAdvertisement>> findAllByIsActive();
 	
-	public DataResult<List<JobAdvertisement>> getAllSortedByDeadline();
+	DataResult<List<JobAdvertisement>> findAllByIsActiveSorted();
 	
-	public DataResult<List<JobAdvertisement>> getByEmployer_CompanyNameAndIsActive(String companyName);
+	DataResult<List<JobAdvertisement>> findAllByIsActiveAndCompanyName(int id);
 	
-	public Result update(int id , boolean isAvtice);
+	DataResult<JobAdvertisement> setJobAdvertisementDisabled(int id);
 }

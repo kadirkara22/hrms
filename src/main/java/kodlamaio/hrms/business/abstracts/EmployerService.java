@@ -12,6 +12,7 @@ public interface EmployerService {
 
 	Result delete(int id);
 	
+	DataResult<Employer> add(Employer employer);
 	DataResult<List<Employer>>getAll();
 	
 	public Result register(Employer employer, HrmsVerification hrmsVerification, EmailVerification emailVerification);

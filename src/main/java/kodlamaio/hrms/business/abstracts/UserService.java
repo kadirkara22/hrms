@@ -12,7 +12,10 @@ import kodlamaio.hrms.entities.concretes.User;
 public interface UserService {
 
     DataResult<List<User>>getAll();
-	Result add(User user);
+    
+	User add(User user);
+	
+	Result newAdd(User user);
 	
 	public Result register(User user, HrmsVerification hrmsVerification, EmailVerification emailVerification);
 }

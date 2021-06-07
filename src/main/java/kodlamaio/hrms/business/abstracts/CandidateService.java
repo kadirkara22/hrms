@@ -12,7 +12,7 @@ import kodlamaio.hrms.entities.concretes.MernisVerification;
 public interface CandidateService {
 	
 	Result delete(int id);
-	
+	DataResult<Candidate> add(Candidate candidate);
 	DataResult<List<Candidate>>getAll();
 	
 	Result register(Candidate candidate, EmailVerification emailVerification, MernisVerification mernisVerification);

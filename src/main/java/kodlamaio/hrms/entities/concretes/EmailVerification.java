@@ -12,20 +12,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "email_verification")
+@AllArgsConstructor
+@Entity
+@Table(name="verification_codes")
 public class EmailVerification {
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private int id;
 	
-	@Column(name = "email_id")
-	private int emailId;
+	@Column(name="code")
+	private String code;
 	
-	@Column(name = "email_bool")
-	private boolean emailBool;
+	@Column(name="is_verified")
+	private boolean isVerified;
+	
+	@Column(name="user_id")
+	private int userId;
+	
+	public boolean isVerified() {
+		return this.isVerified;
+	}
+	
 }

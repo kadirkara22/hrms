@@ -32,7 +32,7 @@ public class User {
 	private String email;
 	
 	@Column(name = "password_hash")
-	private String passwordHash;
+	private String password;
 
 	@Column(name = "password_salt")
 	private String passwordSalt;

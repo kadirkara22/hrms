@@ -32,7 +32,7 @@ public class IdentityCheckManager implements IdentityCheckService{
 
 		for (int i = 0; i < numberOfidentities; i++) {
 
-			identities.add(candidates.get(i).getIdentityNumber());
+			identities.add(candidates.get(i).getIdentificationNumber());
 		}
 		return identities;
 	}

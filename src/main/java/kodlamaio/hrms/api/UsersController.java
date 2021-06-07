@@ -34,6 +34,6 @@ public class UsersController {
 	
 	@PostMapping("/add")
 	public Result add(@RequestBody User user) {
-	return	this.userService.add(user);
+	return	this.userService.newAdd(user);
 	}
 }

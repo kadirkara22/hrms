@@ -33,8 +33,8 @@ public class Candidate extends User {
 	private String gender;
 	
 	@Column(name="date_of_birth")
-	private LocalDate dateOfBirth;
+	private LocalDate birthDate;
 	
 	@Column(name="identity_number")
-	private String identityNumber;
+	private String identificationNumber;
 }

@@ -12,4 +12,9 @@ public interface JobTitleService {
 	
     Result add(JobTitle jobTitle);
 	Result delete(int id);
+	
+
+	DataResult<List<JobTitle>> findById(int id);
+	
+	DataResult<List<JobTitle>> findJobTitles(String title);
 }
